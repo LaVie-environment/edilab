@@ -31,7 +31,8 @@ Resources:
   subnet:
     Type: "AWS::EC2::Subnet"
     Properties:
-     VpcId: !Ref VPC
+     VpcId:
+      Ref: VPC
      AvailabilityZone: 
       Fn::Select:
       - 0
