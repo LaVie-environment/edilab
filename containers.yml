@@ -37,7 +37,8 @@ Resources:
       Fn::Select:
       - 0
       - Fn::GetAZs: ''
-     CidrBlock: !Ref SubnetCIDR
+     CidrBlock:
+      Ref: SubnetCIDR
      MapPublicIpOnLaunch: true
      Tags:
       - Key: Name
@@ -52,8 +53,10 @@ Resources:
       - VPC
       - IGW
     Properties: 
-     VpcId: !Ref VPC
-     InternetGatewayId: !Ref IGW
+     VpcId:
+      Ref: VPC
+     InternetGatewayId:
+      Ref: IGW
      
   ec2Route:
     Type: "AWS::EC2::RouteTable"
@@ -61,7 +64,8 @@ Resources:
       - VPC
       - AttachGateway
     Properties:
-      VpcId: !Ref VPC
+      VpcId:
+        Ref: VPC
 
   routeOut:
     Type: "AWS::EC2::Route"
@@ -70,8 +74,10 @@ Resources:
       - AttachGateway
     Properties:
       DestinationCidrBlock: 0.0.0.0/0
-      GatewayId: !Ref IGW
-      RouteTableId: !Ref ec2Route
+      GatewayId:
+        Ref: IGW
+      RouteTableId:
+        Ref: ec2Route
 
   SubnetRouteAssociate:
     Type: "AWS::EC2::SubnetRouteTableAssociation"
@@ -79,8 +85,10 @@ Resources:
       - ec2Route
       - subnet 
     Properties:
-      RouteTableId: !Ref ec2Route
-      SubnetId: !Ref subnet
+      RouteTableId:
+        Ref: ec2Route
+      SubnetId:
+        Ref: subnet
 
   EmployeesTable:
     Type: AWS::DynamoDB::Table 
@@ -117,7 +125,7 @@ Resources:
       InstanceProfileName: cloud9-containers-role
       Path: "/"
       Roles:
-        - !Ref Cloud9Role
+        - Ref: Cloud9Role
 
 
 
